@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,600&family=Source+Sans+Pro:wght@200;300;400;600;700;900&family=Source+Serif+4:wght@200;300;400&display=swap');
+*{
+    margin-bottom: 1rem;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+body{
+    --titulos: #66635B;
+    --lineas:#4C5760;
+    font-family: 'Source Sans Pro', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-items: center;
+    font-size: 1.2rem;
+    height: 100vh;
+    background-image: url('../img/fondo_inicio.png');
+    background-size: cover;
+    background-attachment:fixed;
+}
+form{
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20%;
+    -webkit-box-shadow: 5px 7px 36px 0px rgba(0,0,0,0.5);   
+    -moz-box-shadow: 5px 7px 36px 0px rgba(0,0,0,0.5);
+    box-shadow: 5px 7px 36px 0px rgba(0,0,0,0.5);
+    background-color: white;
+}
+.entrada{
+    width: 80%;
+    text-align: center;
+    height: 1.5rem;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+section{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 30vh;
+}
+h1{
+    margin-bottom: 3rem;
+    font-size: 2.4rem;
+    font-family: 'Playfair Display', serif;
+}
+.btn{
+    width: 80%;
+    text-align: center;
+    background-color: #38302E;
+    border: none;
+    color: white;
+    padding: 0.6rem;
+    font-size: 1.2rem;
+    transition-property: all;
+    transition-duration: 0.1s;
+    transition-timing-function: linear;
+    cursor: pointer;
+}
+.btn:hover{
+    background-color: #645754;
+}
+.register{
+    margin-top: 1.5rem;
+    width: 14%;
+    -webkit-box-shadow: 5px 7px 36px 0px rgba(0,0,0,0.5);   
+    -moz-box-shadow: 5px 7px 36px 0px rgba(0,0,0,0.5);
+    box-shadow: 5px 7px 36px 0px rgba(0,0,0,0.5);
+}
+.error{
+    width: 95%;
+    background-color: #FCAE97;
+    display: none;
+    justify-content: space-around;
+    color: #E50F0F;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+}
+@media(max-width: 720px){
+    form{
+        width: 40%;
+    }
+    .register{
+        width: 28%;
+    }
+}
+@media(max-width: 450px){
+    form{
+        width: 60%;
+    }
+    .register{
+        width: 42%;
+    }
+}
+@media(max-width: 320px){
+    form{
+        width: 80%;
+    }
+    .register{
+        width: 56%;
+    }
+}

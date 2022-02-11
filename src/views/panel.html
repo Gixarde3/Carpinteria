@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <%- include('head.html') %>
+    <% if(login) { %>
+        <title>Panel de control de <%= admin %></title>
+    <% }else {%>
+        <script>
+            window.location="/admin";
+        </script>
+    <% } %> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/panel.css">
+  </head>
+  <body>
+        <section class="parte-superior">
+            <nav>
+                <a href="/panel"><box-icon name='wrench' color='#ffffff' ></box-icon>Panel principal</a>
+                <a href="/"><box-icon name='home' color="#ffffff"></box-icon>Página visible</a>
+                <a href=""><box-icon name='scatter-chart' color='#ffffff' ></box-icon>Ventas</a>
+            </nav>
+            <a id="administrador" href="/logout"><%= admin %>: Logout</a>
+        </section>
+        <main>
+            <article id="venta">
+                <h2>Ventas aún no pagadas.</h2>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Concepto</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Pagada</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% 
+                            let contador = 0;
+                            ventasNoPag.forEach((ventas)=>{ %>
+                                <tr>
+                                    <th scope="row"><%= ventas.id %></th>
+                                    <td><%= ventas.concepto %></td>
+                                    <td><%= ventas.valor %></td>
+                                    <td><%= ventas.pagada==1?"Si":"No";%></td>
+                                </tr>
+                            <%
+                                contador++;    
+                            })
+                            %>
+                            <% if(contador==0){ %>
+                                <td colspan="4">¡No hay ventas pendientes!</td>
+                            <%}%>
+                        </tbody>
+                    </table>
+                </div>
+                <% if (contador>0) {%>
+                    <button onclick="abrirVentana(1,'uwu', 0)"><box-icon name='plus-circle' color='#ffffff' ></box-icon>Añadir nueva venta</button>
+                <%}%>
+            </article>
+            <article id="a-gal">
+                <h2>Agregar nuevo trabajo.</h2>
+                <form action="/subir" method="POST" enctype="multipart/form-data">
+                    <input type="text" placeholder="Material del trabajo" name="material" required>
+                    <input type="number" placeholder="Precio del trabajo" name="costo" required>
+                    <textarea name="descripcion" placeholder="Descripción del trabajo" cols="30" rows="5"></textarea>
+                    <input type="file" name="imagen" required>
+                    <button type="submit"><box-icon name='cloud-upload' color='#ffffff' ></box-icon>Subir</button>
+                </form>
+            </article>
+            <article id="ad-pend">
+                <h2>Administradores no verificados.</h2>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Administrador</th>
+                                <th scope="col">Verificado</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% 
+                            contador = 0;
+                            adminsNoVeri.forEach((administradores)=>{ %>
+                                <tr>
+                                    <th scope="row"><%= administradores.admin %></th>
+                                    <td>No</td>
+                                    <td><button onclick="abrirVentana(2,'<%= administradores.admin %>',<%= administradores.id %>)">Verficar</button></td>
+                                </tr>
+                            <%
+                                contador++;    
+                            })
+                            %>
+                            <% if(contador==0){ %>
+                                <td colspan="4">¡No hay administradores por verificar pendientes!</td>
+                            <%}%>
+                        </tbody>
+                    </table> 
+                </div>
+            </article>
+            <article id="emergente">
+                <button onclick="cerrarVent()" id="cerrar"><box-icon name='collapse-alt' color='#ffffff' size=lg></box-icon></button>
+                <div id=ventana>
+                    
+                </div>
+            </article>
+        </main>
+        <footer>
+            <p>Panel creado por: Gixarde3</p>
+        </footer>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <% if(typeof alert != "undefined") { %>
+            <script>
+                Swal.fire({
+                    title: '<%= alertTitle %>',
+                    text: '<%= alertMessage %>',
+                    icon: '<%= alertIcon %>',
+                    showConfirmButton: <%=showConfirmButton%>,
+                    timer: <%=time%>
+                }).then(()=>{
+                    window.location = "<%= ruta %>";
+                })
+            </script>
+        <% } %>
+    </body>
+</html>

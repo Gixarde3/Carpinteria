@@ -1,0 +1,425 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,600&family=Source+Sans+Pro:wght@200;300;400;600;700;900&family=Source+Serif+4:wght@200;300;400&display=swap');
+body{
+    --titulos: #66635B;
+    --lineas:#4C5760;
+    font-family: 'Source Sans Pro', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2rem;
+}
+box-icon{
+    margin-right: 0.3rem;
+    width: 10%;
+}
+p{
+    text-align: justify;
+}
+section{
+    background-color: white;
+    font-family: 'Source Sans Pro', sans-serif;
+    width: 90%;
+}
+.logo{
+    width: 40%;
+}
+.vacio{
+    width: 20%;
+}
+.logo img{
+    width: 100%;
+}
+nav{
+    padding-top: 1rem;
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+header{
+    display:flex;
+    justify-content: space-between;
+    width: 90%;
+    padding-left: 1rem;
+    z-index: 1;
+}
+.inicio{
+    font-family: 'Source Sans Pro', sans-serif;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-image: url('../img/fondo_inicio.png');
+    background-size: cover;
+    background-attachment:fixed;
+}
+.contenedor{
+    height: 60%;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 10rem;
+}
+#nosotros{
+    margin-top: 4rem;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-height: 10rem;   
+}
+.seccion{
+    height: 60%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 10rem;
+    margin-top: 4rem;
+}
+.trabajos{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 1rem;
+}
+.referencia{
+    width: 40%;
+    background-image: url("../img/nosotros-img.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 15rem;
+}
+.textos{
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    justify-content: space-around;
+}
+.contenido{
+    font-weight: 400;
+    margin-top: 1rem;
+}
+.titulo{
+    font-family: 'Source Serif 4', sans-serif;
+    font-weight: 400;
+    color:var(--titulos);
+    font-size: 2rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 2px solid black;
+}
+.nombre{
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: white;
+    z-index: 1;
+    padding-top: 10px;
+}
+a{
+    text-decoration: none;
+    transition-property: color;
+    transition-duration: 0.1s;
+    transition-timing-function: linear;
+}
+nav a{
+    color: white;
+    z-index: 1;
+    background-color: #38302E;
+    height: 100%;
+    width: 28%;
+    padding-top:0.2rem;
+    padding-bottom: 0.1rem;
+    text-align: center;
+    line-height: normal;
+}
+nav a:hover{
+    color:#747474;
+    background-color: #5a4e4b;
+}
+.galeria{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    margin: auto;
+    grid-gap: 1rem;
+    padding: 4rem 0;
+}
+.galeria img{
+    width: 100%;
+    height: 100%;
+    vertical-align: top;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+.imagen{
+    position: relative;
+    display: block;
+    overflow: hidden;
+}
+.imagen:hover img{
+    transform:scale(1.3);
+}
+.lightbox{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100vh;
+    z-index: 1000;
+    display: flex;
+    transition:transform 0.3s ease-in-out;
+    justify-content: center;
+    align-items: center;
+    transform:scale(0);
+}
+.lightbox img{
+    width: 45vw;
+}
+.lightbox:target{
+    transform:scale(1);
+}
+.informacion{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+    justify-content: space-around;
+    background-color: white;
+    width: 30%;
+    height: 20rem;
+    margin-left: 2rem;
+}
+.informacion p{
+    display: flex;
+    align-items: center;
+}
+.subtitulo{
+    font-family: 'Source Serif 4', sans-serif;
+    color:var(--titulos);
+    width: 100%;
+    justify-content: space-around;
+    font-size: 1.3rem;
+    border-bottom: 2px solid black;
+}
+.cerrar{
+    position: absolute;
+    top: 3rem;
+    right: 3rem;
+    background-color:rgba(56, 48, 46,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cerrar box-icon{
+    margin-right: 0;
+    width: 60%;
+}
+.btn{
+    background: rgba(204, 218, 209, 0.7);
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn box-icon{
+    width: 80%;
+    filter: invert(100);
+}
+.contenedor-con{
+    width: 100%;
+    height: 80vh;
+    position: relative;
+    margin-top: 2rem;
+}
+.contenedor-con iframe{
+    width: 100%;
+    height: 80vh;
+}
+.contacto-inf{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    height: 40%;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: white;
+    padding: 1rem;
+    justify-content: space-around;
+    align-items: center;
+    -webkit-box-shadow: -9px 10px 5px 0px rgba(0,0,0,0.46);
+    -moz-box-shadow: -9px 10px 5px 0px rgba(0,0,0,0.46);
+    box-shadow: -9px 10px 5px 0px rgba(0,0,0,0.46);
+}
+.contacto-inf p{
+    display: flex;
+    justify-content:start;
+    align-items: center;
+    width: 90%;
+}
+.contacto-inf a{
+    margin-left: 0.2rem;
+}
+footer{
+    display: flex;
+    margin-top: 4rem;
+    flex-direction: column;
+    background-color: #38302E;
+    width: 100wh;
+    min-height: 20vh;
+    color: white;
+}
+.ver{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.ver-mas{
+    transition-property: all;
+    transition-duration: 0.1s;
+    transition-timing-function: linear;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 20%;
+    height: 3rem;
+    text-decoration: none;
+    color: white;
+    background-color: #38302E;
+    text-align: center;
+}
+.ver-mas:hover{
+    background-color: #5a4e4b;
+}
+footer div{
+    height: 20vh;
+    padding: 1rem;
+}
+#foo{
+    font-size: 1.5em;
+}
+footer p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+footer a{
+    color:#CCDAD1;
+    margin-left: 0.2rem;
+}
+p  img{
+    width: 5%;
+}
+span{
+    width: 50%;
+    display: flex;
+}
+span box-icon{
+    width: 30%;
+}
+#mail{
+    font-size: 1rem;
+}
+.con-mini{
+    margin-top: 1rem;
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    height: 6rem;
+    padding: 1rem;
+    justify-content: space-around;
+    align-items: center;
+}
+.con-mini p{
+    display: flex;
+    justify-content:start;
+    align-items: center;
+    width: 90%;
+}
+.con-mini a{
+    margin-left: 0.2rem;
+}
+@media (max-width:768px){
+    body{
+        font-size: 1rem;
+    }
+    .contacto-inf{
+        top: 0.5rem;
+        right: 0.5rem;
+        width: 40%;
+        padding: 0.5rem;
+    }
+    .contacto-inf p{
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+    .contacto-inf{
+        height: 70%;
+    }
+    #mail{
+        font-size: 0.8rem;
+    }
+}
+@media (max-width: 725px){
+    .nombre{
+        font-size: 2rem;
+    }
+}
+@media (max-width: 580px){
+    .contenedor{
+        width: 90%;
+    }
+    .contacto-inf{
+        display: none;
+    }
+    .con-mini{
+        display: flex;
+    }
+    .seccion{
+        width: 90%;
+    }
+}
+@media (max-width: 450px){
+    .contenedor{
+        width: 100%;
+    }
+    #nosotros{
+        flex-direction: column;
+    }
+    .referencia{
+        width: 100%;
+        /*height: 10rem;*/
+    }
+    .textos{
+        width: 100%;
+    }
+}
+@media (max-width:410px){
+    .contenedor{
+        height: 80%;
+    }
+    .nombre{
+        text-align: center;
+    }
+    nav{
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    }
+    nav a{
+        width: 80%;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+}

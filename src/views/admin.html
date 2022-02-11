@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('head.html') %>
+    <link rel="stylesheet" href="css/login.css">
+    <title>Panel de administración</title>
+</head>
+<body>
+    <section class="login">
+        <form action="auth" method="POST">
+            <h1>Ingresar</h1>
+            <input type="text" name="usuario" id="usuario" placeholder="Usuario" class="entrada">
+            <input type="password" name="pass" id="pass" placeholder="Password" class="entrada">
+            <input type="submit" name="enviar" id="enviar" value="Ingresar" class="btn">
+        </form>
+        <a href="/registrar" class="btn register">Registrarse</a>
+        <a href="/" class="btn register">Página principal</a>
+    </section>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <% if(typeof alert != "undefined") { %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: <%=showConfirmButton%>,
+                timer: <%=time%>
+            }).then(()=>{
+                window.location = "<%= ruta %>";
+            })
+        </script>
+    <% } %>
+</html>

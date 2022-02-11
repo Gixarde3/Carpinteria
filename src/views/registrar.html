@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('head.html') %>
+    <link rel="stylesheet" href="css/login.css">
+    <title>Nuevo usuario</title>
+    <script>
+        function comprobar(){
+            clave1 = document.f1.pass.value
+            clave2 = document.f1.passConf.value
+            if (clave1 == clave2)
+                document.f1.submit();
+            else
+                document.getElementById('error').style="display: flex;";
+        }
+    </script>
+</head>
+<body>
+    <section class="login">
+        <form action="/reg" method="POST" name="f1">
+            <h1>Registrar</h1>
+            <div class="error" id="error"> Las contraseñas no coinciden, intente de nuevo </div>
+            <input type="text" name="usuario" id="usuario" placeholder="Usuario" class="entrada">
+            <input type="password" name="pass" id="pass" placeholder="Contraseña" class="entrada">
+            <input type="password" name="passConf" id="passConf" placeholder="Confirmar contraseña" class="entrada">
+            <input type="button" nid="registrar" value="Registrar" class="btn" onclick=comprobar()>
+        </form>
+        <a href="/admin" class="btn register">Regresar</a>
+        <a href="/" class="btn register">Página principal</a>
+    </section>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <% if(typeof alert != "undefined") { %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle%>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: '<%= showConfirmButton%>',
+                timer: '<%= time %>'
+            }).then(()=>{
+                window.location = "\admin";
+            })
+        </script>
+    <% } %>
+</html>

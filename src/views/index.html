@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('head.html') %>
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Carpintería</title>
+</head>
+<body>
+    <section class="inicio">
+        <div class="contenedor">
+            <div class="logo"><img src="img/logo.jpg" alt="Logo provisional"></div>
+            <h1 class="nombre">CARPINTERIA LICENCIADO</h1>
+            <nav>
+                <a href="#nosotros">Nosotros</a>
+                <a href="#trabajo">Trabajo</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+        </div>
+    </section>
+    <section id="nosotros" class="seccion">
+        <div class="referencia">
+        </div>
+        <div class="textos">
+            <h2 class="titulo">Nosotros</h2>
+            <p class="contenido">Lorem. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id quia officia dignissimos nostrum modi. Maxime atque fuga facilis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis soluta doloremque, non rerum suscipit fugiat? Maxime iste, necessitatibus repudiandae quo culpa unde, illum accusamus minus molestiae dicta nulla deserunt recusandae? Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem illum reiciendis veritatis repudiandae eius molestiae dolorem tempore, vitae perspiciatis sit est provident animi tempora illo, recusandae quia? Nam, quo ducimus. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Harum mollitia tempore sunt sequi hic? Laboriosam repellendus explicabo quod exercitationem unde architecto accusamus, eveniet deleniti ullam sint adipisci ipsum dolorum commodi!</p>
+        </div>
+    </section>
+    <section class="seccion" id="trabajo">
+        <h2 class="titulo">Nuestro trabajo</h2>
+        <% let tamanoArreglo=99999;
+        let contador=0;
+        res.forEach((trabajos)=>{
+            if(tamanoArreglo>trabajos.id){
+                tamanoArreglo=trabajos.id;
+            }            
+        });
+        function idExistente(comprobando,sentido){
+            let noExiste=true;
+            let noRomper=true;
+            let variableExistente=0;
+            do{
+                res.forEach((trabajos)=>{
+                    if(comprobando==trabajos.id&&noRomper){
+                        noExiste=false;
+                        variableExistente=comprobando;
+                    }
+                });
+                if(noExiste){
+                    comprobando+=sentido;
+                }
+            }while(comprobando>0&&comprobando<=tamanoArreglo&&noExiste);
+            return variableExistente;
+        }%>
+        <div class="galeria">
+            <% let i=0; 
+                res.forEach((trabajos)=>{
+                    i++; 
+                    if(i<=9){%> 
+                    <a href=<%= "#trabajo"+trabajos.id %> class="imagen">
+                        <img src=<%= "img/trabajos/"+trabajos.archivo %> alt=<%= trabajos.archivo %>>
+                    </a>
+                    <%}
+                })%>
+        </div>
+        <% if(i>9){%>
+            <div class=ver>
+                <a href="/galeria" class="ver-mas">Ver más trabajos</a>
+            </div>
+        <%}%>
+    </section>
+    <%  i=0;
+        res.forEach((trabajos)=>{
+            i++;
+            if(i<=9){%>
+                <article class="lightbox" id=<%= "trabajo"+trabajos.id%>>
+                    <%let id=idExistente(trabajos.id+1,+1); 
+                        if(id!=0){%>
+                            <a href=<%= "#trabajo"+id %> class="btn"><box-icon name='chevron-left' size=lg></box-icon></a>
+                        <%}%>
+                    <img src=<%= "img/trabajos/"+trabajos.archivo %> alt=<%= trabajos.archivo %>>
+                    <div class="informacion">
+                        <h3 class="subtitulo">Información</h3>
+                        <div class="caracteristicas">
+                            <p><box-icon name='money'></box-icon> Precio: <%= trabajos.precio %></p>
+                            <p><box-icon name='wrench'></box-icon> Materiales: <%= trabajos.material %></p>
+                        </div>
+                        <p><%= trabajos.descripcion %></p>
+                    </div>
+                    <%id=idExistente(trabajos.id-1,-1); 
+                        if(id!=0){%>
+                            <a href=<%= "#trabajo"+id %> class="btn"><box-icon name='chevron-right' size=lg></box-icon></a>
+                        <%}%>
+                    <a href="#999" class="cerrar"><box-icon name='collapse-alt' color='#ffffff' size=lg></box-icon></a>
+                </article>  
+            <%}
+        })%>
+
+    <section class="seccion" id="contacto">
+        <h2 class="titulo">Contacto</h2>
+        <div class="contenedor-con">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3999.5094265312123!2d-99.17523030345616!3d18.885561110266305!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85ce75ec761c5ceb%3A0x1f9f9e2857e444c1!2sEx%20Hacienda%20Santa%20Cecilia!5e0!3m2!1ses-419!2smx!4v1643766624573!5m2!1ses-419!2smx" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <div class="contacto-inf">
+                <p><span><box-icon type='logo' name='whatsapp'></box-icon> Whatsapp: </span><a href="wa.link/8n02d0">777 209 0391</a></p>
+                <p><span><box-icon name='phone'></box-icon>Teléfono:</span> 777 209 0391</p>
+                <p id=mail><span><box-icon name='mail-send' ></box-icon>E-mail:</span> cosillasgixarde@gmail.com<a href=""></a></p>
+                <p>Para cotizar algo en específico, ¡Contátese con nosotros, lo atenderemos con mucho gusto!</p>
+            </div>
+        </div>
+        <div class="con-mini">
+            <p><box-icon type='logo' name='whatsapp'></box-icon> Whatsapp: <a href="wa.link/8n02d0">777 209 0391</a></p>
+            <p><box-icon name='phone'></box-icon>Teléfono: 777 209 0391</p>
+            <p id=mail><box-icon name='mail-send' ></box-icon>E-mail: cosillasgixarde@gmail.com<a href=""></a></p>
+            <p>Para cotizar algo en específico, ¡Contátese con nosotros, lo atenderemos con mucho gusto!</p>
+        </div>
+    </section>
+    <footer>
+        <p class="nombre" id=foo> <img src="img/logo.jpg" alt="Logo"> Carpintería Licenciado.</p>
+        <p><box-icon type='logo' name='whatsapp'></box-icon> Whatsapp: <a href="wa.link/8n02d0">777 209 0391</a></p>
+        <p><box-icon name='phone'></box-icon>Teléfono: 777 209 0391</p>
+    </footer>
+</body>
+</html>
