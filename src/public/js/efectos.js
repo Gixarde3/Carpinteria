@@ -18,6 +18,8 @@ function abrirVentana(funcion,nombre,id){
 			"<form action='/anadir' method=POST>"+
 			"	<input type='text' name='concepto' placeholder='Motivo de la venta' required>"+
 			"	<input type='number' name='cantidad' placeholder='Costo total' required>"+
+			"	<input type='text' name='persona' placeholder='A nombre de' required>"+
+			"	<textarea name='descripcion' placeholder='Descripción del trabajo' cols='30' rows='5'></textarea>"+
 			"	<input type='submit' name='enviar' value='Añadir venta' required>"+
 			"</form>"
 		)

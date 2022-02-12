@@ -15,6 +15,10 @@
                 <a href="#trabajo">Trabajo</a>
                 <a href="#contacto">Contacto</a>
             </nav>
+            <form action="/buscar" method="POST">
+                <input type="number" placeholder="¿Tienes alguna compra realizada? ¡Ingresa el id otorgado!" name="id" required>
+                <input type="submit" name="enviar" value="Buscar" class="btn">
+            </form>
         </div>
     </section>
     <section id="nosotros" class="seccion">
@@ -27,29 +31,24 @@
     </section>
     <section class="seccion" id="trabajo">
         <h2 class="titulo">Nuestro trabajo</h2>
-        <% let tamanoArreglo=99999;
-        let contador=0;
+        <%
+        let trabajosId=new Array();
         res.forEach((trabajos)=>{
-            if(tamanoArreglo>trabajos.id){
-                tamanoArreglo=trabajos.id;
-            }            
-        });
+            trabajosId.push(trabajos.id);
+        })
+        console.log(trabajosId);
         function idExistente(comprobando,sentido){
-            let noExiste=true;
-            let noRomper=true;
-            let variableExistente=0;
-            do{
-                res.forEach((trabajos)=>{
-                    if(comprobando==trabajos.id&&noRomper){
-                        noExiste=false;
-                        variableExistente=comprobando;
-                    }
-                });
-                if(noExiste){
-                    comprobando+=sentido;
+            let idActual=0;
+            siguiente=0;
+            for(let i=0; i<trabajosId.length; i++){
+                if(trabajosId[i]==comprobando){
+                    idActual=i;
                 }
-            }while(comprobando>0&&comprobando<=tamanoArreglo&&noExiste);
-            return variableExistente;
+            }
+            if(trabajosId[idActual+sentido]){
+                siguiente=trabajosId[idActual+sentido];
+            }
+            return siguiente;
         }%>
         <div class="galeria">
             <% let i=0; 
@@ -73,7 +72,7 @@
             i++;
             if(i<=9){%>
                 <article class="lightbox" id=<%= "trabajo"+trabajos.id%>>
-                    <%let id=idExistente(trabajos.id+1,+1); 
+                    <%let id=idExistente(trabajos.id,-1); 
                         if(id!=0){%>
                             <a href=<%= "#trabajo"+id %> class="btn"><box-icon name='chevron-left' size=lg></box-icon></a>
                         <%}%>
@@ -86,7 +85,7 @@
                         </div>
                         <p><%= trabajos.descripcion %></p>
                     </div>
-                    <%id=idExistente(trabajos.id-1,-1); 
+                    <%id=idExistente(trabajos.id,+1); 
                         if(id!=0){%>
                             <a href=<%= "#trabajo"+id %> class="btn"><box-icon name='chevron-right' size=lg></box-icon></a>
                         <%}%>
@@ -118,5 +117,19 @@
         <p><box-icon type='logo' name='whatsapp'></box-icon> Whatsapp: <a href="wa.link/8n02d0">777 209 0391</a></p>
         <p><box-icon name='phone'></box-icon>Teléfono: 777 209 0391</p>
     </footer>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <% if(typeof alert != "undefined") { %>
+            <script>
+                Swal.fire({
+                    title: '<%= alertTitle %>',
+                    text: '<%= alertMessage %>',
+                    icon: '<%= alertIcon %>',
+                    showConfirmButton: <%=showConfirmButton%>,
+                    timer: <%=time%>
+                }).then(()=>{
+                    window.location = "<%= ruta %>";
+                })
+            </script>
+        <% } %>
 </body>
 </html>

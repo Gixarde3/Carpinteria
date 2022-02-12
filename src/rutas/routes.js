@@ -8,9 +8,39 @@ const multer = require('multer');
 const { redirect } = require('express/lib/response');
 const uuid = require('uuid');
 const {Router} = require('express');
+const { rawListeners } = require('process');
 const router = Router();
+const stripe = require("stripe")('sk_test_51KSDOZCSDiTjPacS84qjgU7KS1PzbqZIH9seCfwY38isK3BL1EcOs7fYr1YB0JOjqVrK467EUOP6D5NdqPojW7sE00rynd7pKc');
+
+app.use(express.static("public"));
+
+
+router.post("/create-payment-intent", async (req, res) => {
+  const { items } = req.body;
+  conexion.query("SELECT * FROM ventas WHERE id = ?",req.session.idVenta, async(error,results)=>{
+        if(error){
+            throw error;
+        }else{
+             // Create a PaymentIntent with the order amount and currency
+            const paymentIntent = await stripe.paymentIntents.create({
+                amount: results[0].valor,
+                currency: "mxn",
+                automatic_payment_methods: {
+                enabled: true,
+                },
+            });
+
+  res.send({
+    clientSecret: paymentIntent.client_secret,
+  });
+        }
+  })
+});
+
+
 //Ruta
 router.get('/',(req,res)=>{
+    req.session.destroy();
     conexion.query("SELECT * FROM trabajos ORDER BY id DESC",(error,results)=>{
         if(error){
             throw error;
@@ -137,7 +167,9 @@ router.get('/logout',(req,res)=>{
 router.post('/anadir',(req,res)=>{
     const concepto= req.body.concepto;
     const valor = req.body.cantidad;
-    conexion.query('INSERT INTO ventas SET ?',{concepto: concepto, valor: valor}, (error, results)=>{
+    const persona = req.body.persona;
+    const descripcion = req.body.descripcion;
+    conexion.query('INSERT INTO ventas SET ?',{concepto, valor, a_nombre_de: persona, descripcion}, (error, results)=>{
         if(error){
             throw error;
         }else{
@@ -237,8 +269,8 @@ router.post('/subir',(req,res)=>{
                             adminsNoVeri: results[0],
                             ventasNoPag: results[1],
                             alert: true,
-                            alertTitle: "Venta añadida con éxito",
-                            alertMessage: "La venta ha sido añadida a la base de datos con éxito.",
+                            alertTitle: "Trabajo subido con éxito.",
+                            alertMessage: "La imagen ha sido añadida a la galería de trabajos.",
                             alertIcon: "success",
                             showConfirmButton: false,
                             time: 1500,
@@ -251,6 +283,92 @@ router.post('/subir',(req,res)=>{
                     }
                 }
             })
+        }
+    })
+})
+
+router.post('/buscar',(req,res)=>{
+    const id = req.body.id;
+    if(id){
+        conexion.query("SELECT * FROM ventas WHERE pagada = '0' AND id = ?",[id], async (error, results)=>{
+            if(results.length == 0){
+                conexion.query("SELECT * FROM trabajos ORDER BY id DESC",(error,results)=>{
+                    if(error){
+                        throw error;
+                    }else{
+                        res.render('index.html',{
+                            res: results,
+                            alert: true,
+                            alertTitle: "No hay ningún producto con esa código que no haya sido pagado aún.",
+                            alertMessage: "Verifíquelo de nuevo o contacte a uno de nuestros vendedores.",
+                            alertIcon: "error",
+                            showConfirmButton: true,
+                            time: false,
+                            ruta: '/'
+                        })
+                    }
+                })
+            }else{
+                conexion.query("SELECT * FROM trabajos ORDER BY id DESC",(error,results)=>{
+                    if(error){
+                        throw error;
+                    }else{
+                        req.session.idVenta = id;
+                        res.render('index.html',{
+                            res: results,
+                            alert: true,
+                            alertTitle: "Producto encontrado.",
+                            alertMessage: "Redirigiendo al panel de venta.",
+                            alertIcon: "success",
+                            showConfirmButton: false,
+                            time: 1500,
+                            ruta: '/venta'
+                        })
+                    }
+                })
+            }
+        })
+    }
+})
+
+router.get('/venta', (req, res)=>{
+    if(req.session.idVenta){
+        conexion.query("SELECT * FROM ventas WHERE id = ?",[req.session.idVenta],(error, results)=>{
+            if(error){
+                throw error;
+            }else{
+                res.render('producto.html',{
+                    venta: true,
+                    id: req.session.idVenta,
+                    ventas: results
+                });
+            }
+        })
+    }else{
+        res.redirect('/')
+    }
+})
+
+router.get('/succes', async (req,res)=>{
+    let consultas = [
+        "UPDATE ventas SET pagada = '1' WHERE ?",
+        "SELECT * FROM trabajos ORDER BY id DESC"
+    ]
+    conexion.query(consultas.join(';'),{ id : req.session.idVenta},(error, results)=>{
+        if(error){
+            throw error;
+        }else{
+            res.render('index.html',{
+                id: req.session.idVenta,
+                res: results[1],
+                alert: true,
+                alertTitle: "Producto pagado con éxito.",
+                alertMessage: "Redirigiendo a la página de inicio",
+                alertIcon: "success",
+                showConfirmButton: false,
+                time: 1500,
+                ruta: '/'
+            });
         }
     })
 })

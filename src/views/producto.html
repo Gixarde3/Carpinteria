@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('head.html') %>
+    <%  var producto;
+        var nombre;
+        var costo;
+        var descripcion;
+        ventas.forEach((productoE)=>{
+            producto = productoE.concepto;
+            nombre = productoE.a_nombre_de;
+            costo = productoE.valor; 
+            descripcion = productoE.descripcion;
+        })
+    %>
+    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="css/checkout.css" />
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="js/checkout.js" defer></script>
+    <title>Venta de <%= producto %></title>
+</head>
+<body>
+    <section class="parte-superior">
+        <nav>
+            <a href="/"><box-icon name='home' color="#ffffff"></box-icon>Página principal</a>
+            <a href="/galeria"><box-icon name='images' color='#ffffff' ></box-icon>Más trabajos</a>
+        </nav>
+    </section>
+    <section class="login">
+        <form id="payment-form">
+            <h1>Venta de <%= producto %></h1>
+            <h2>Descripción del producto: </h2>
+            <p id="descripcion"><%= descripcion %></p>
+            <p><box-icon name='money'></box-icon> Precio: $<%= costo %> Mxn</p>
+            <input type="hidden" value=<%=costo %> name="costo">
+            <p><box-icon name='user-circle' type='solid' ></box-icon> Vendida a:  <%= nombre %></p>
+            <div id="payment-element">
+                <!--Stripe.js injects the Payment Element-->
+              </div>
+              <button id="submit">
+                <div class="spinner hidden" id="spinner"></div>
+                <span id="button-text">Pay now</span>
+              </button>
+              <div id="payment-message" class="hidden"></div>
+        </form>
+    </section>
+</body>
+</html>
