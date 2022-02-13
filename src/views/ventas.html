@@ -14,23 +14,23 @@
     <link rel="stylesheet" href="css/panel.css">
   </head>
   <body>
-    <% function formato(precioF){
-        precio = ""+precioF;
-        let precioFormato = "";
-        var cont = 0;
-        for(var j=precio.length-1; j >= 0; j--){
-            cont++;
-            precioFormato+=precio[j];
-            if(cont%3==0 && j != 0){
-                precioFormato+=',';
+        <% function formato(precioF){
+            precio = ""+precioF;
+            let precioFormato = "";
+            var cont = 0;
+            for(var j=precio.length-1; j >= 0; j--){
+                cont++;
+                precioFormato+=precio[j];
+                if(cont%3==0 && j != 0){
+                    precioFormato+=',';
+                }
             }
-        }
-        let formatoFinal="";
-        for(var j=precioFormato.length-1; j >= 0; j--){
-            formatoFinal+=precioFormato[j];
-        }
-        return formatoFinal;
-    }%>
+            let formatoFinal="";
+            for(var j=precioFormato.length-1; j >= 0; j--){
+                formatoFinal+=precioFormato[j];
+            }
+            return formatoFinal;
+        }%>
         <section class="parte-superior">
             <nav id="large">
                 <a href="/panel"><box-icon name='wrench' color='#ffffff' ></box-icon>Panel principal</a>
@@ -44,7 +44,7 @@
             <a  href="#" class="boton"><box-icon name='left-arrow-alt' color='#ffffff' ></box-icon></a>
             <a href="/panel"><box-icon name='wrench' color='#ffffff' ></box-icon>Panel principal</a>
             <a href="/"><box-icon name='home' color="#ffffff"></box-icon>Página visible</a>
-            <a href="/ventas"><box-icon name='scatter-chart' color='#ffffff' ></box-icon>Ventas</a>
+            <a href=""><box-icon name='scatter-chart' color='#ffffff' ></box-icon>Ventas</a>
         </nav>
         <main>
             <article id="venta">
@@ -81,46 +81,39 @@
                     <button onclick="abrirVentana(1,'uwu', 0)"><box-icon name='plus-circle' color='#ffffff' ></box-icon>Añadir nueva venta</button>
                 <%}%>
             </article>
-            <article id="a-gal">
-                <h2>Agregar nuevo trabajo.</h2>
-                <form action="/subir" method="POST" enctype="multipart/form-data">
-                    <input type="text" placeholder="Material del trabajo" name="material" required>
-                    <input type="number" placeholder="Precio del trabajo" name="costo" required>
-                    <textarea name="descripcion" placeholder="Descripción del trabajo" cols="30" rows="5"></textarea>
-                    <input type="file" name="imagen" required>
-                    <button type="submit"><box-icon name='cloud-upload' color='#ffffff' ></box-icon>Subir</button>
-                </form>
-            </article>
-            <article id="ad-pend">
-                <h2>Administradores no verificados.</h2>
+            <article id="venta">
+                <% var total=0; %>
+                <h2>Ventas pagadas.</h2>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th scope="col">Administrador</th>
-                                <th scope="col">Verificado</th>
-                                <th scope="col"></th>
+                                <th scope="col">#</th>
+                                <th scope="col">Concepto</th>
+                                <th scope="col">Cantidad</th>
                             </tr>
                         </thead>
                         <tbody>
                             <% 
                             contador = 0;
-                            adminsNoVeri.forEach((administradores)=>{ %>
+                            ventasPag.forEach((ventas)=>{ %>
                                 <tr>
-                                    <th scope="row"><%= administradores.admin %></th>
-                                    <td>No</td>
-                                    <td><button onclick="abrirVentana(2,'<%= administradores.admin %>',<%= administradores.id %>)">Verficar</button></td>
+                                    <th scope="row"><%= ventas.id %></th>
+                                    <td><%= ventas.concepto %></td>
+                                    <td>$<%= formato(ventas.valor) %> Mxn</td>
+                                    <% total+=ventas.valor%>
                                 </tr>
                             <%
                                 contador++;    
                             })
                             %>
                             <% if(contador==0){ %>
-                                <td colspan="4">¡No hay administradores por verificar pendientes!</td>
+                                <td colspan="4">No hay ventas pagadas :(</td>
                             <%}%>
                         </tbody>
-                    </table> 
+                    </table>
                 </div>
+                <p>Total venidido: $<%= formato(total) %>Mxn</p>
             </article>
             <article id="emergente">
                 <button onclick="cerrarVent()" id="cerrar"><box-icon name='collapse-alt' color='#ffffff' size=lg></box-icon></button>

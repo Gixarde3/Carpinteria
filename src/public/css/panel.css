@@ -20,6 +20,7 @@ body{
     align-items: center;
     padding: 1rem;
     background-color: var(--fondo);
+    height: 3rem;
 }
 a{
     margin-left: 0.5rem;
@@ -141,4 +142,67 @@ input{
 textarea{
     width: 100%;
     margin-bottom: 1rem;
+}
+#mini{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 50%;
+    height: 20rem;
+    background-color: var(--fondo);
+    transition:transform 0.3s ease-in-out;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(-100%);
+}
+#mini a{
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+#responsive{
+    display: none;
+    width: auto;
+}
+#responsive box-icon{
+    width: 100%;
+}
+#mini:target{
+    display: flex;
+    transform: translateX(0);
+}
+.boton{
+    width: 100%;
+}
+@media (max-width: 950px) {
+    article{
+        width: 80%;
+    }
+}
+@media (max-width: 650px) {
+    #responsive{
+        display: block;
+    }
+    .parte-superior{
+        height: 5rem;
+    }
+    .parte-superior{
+        justify-content: space-between;
+    }
+    .parte-superior a{
+        padding: 0.5rem;
+    }
+    #large{
+        display: none;
+    }
+    article{
+        width: 90%;
+    }
+}
+@media (max-width: 420px) {
+    article{
+        width: 95%;
+    }
 }

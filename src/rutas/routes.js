@@ -23,7 +23,7 @@ router.post("/create-payment-intent", async (req, res) => {
         }else{
              // Create a PaymentIntent with the order amount and currency
             const paymentIntent = await stripe.paymentIntents.create({
-                amount: results[0].valor,
+                amount: results[0].valor+'00',
                 currency: "mxn",
                 automatic_payment_methods: {
                 enabled: true,
@@ -96,7 +96,7 @@ router.get('/panel', (req,res)=>{
                     ventasNoPag: results[1]
                 });
             }else{
-                res.render('panel.html',{
+                res.render('admin.html',{
                     login: false
                 });
             }
@@ -373,4 +373,39 @@ router.get('/succes', async (req,res)=>{
     })
 })
 
+router.get('/ventas', (req, res)=>{
+    let consultas = [
+        "SELECT * FROM ventas WHERE pagada = '1'",
+        "SELECT * FROM ventas WHERE pagada = '0'"
+    ]
+    conexion.query(consultas.join(';'),(error, results)=>{
+        if(error){
+            throw error;
+        }else{
+            if(req.session.loggedin){
+                res.render('ventas.html',{
+                    login: true,
+                    admin: req.session.admin,
+                    ventasNoPag: results[1],
+                    ventasPag: results[0]
+                });
+            }else{
+                res.render('admin.html',{
+                    login: false
+                });
+            }
+        }
+    })
+})
+
+router.get('/galeria', (req, res)=>{
+    req.session.destroy();
+    conexion.query("SELECT * FROM trabajos ORDER BY id DESC",(error,results)=>{
+        if(error){
+            throw error;
+        }else{
+            res.render('galeria.html',{res: results})
+        }
+    })
+})
 module.exports = router;

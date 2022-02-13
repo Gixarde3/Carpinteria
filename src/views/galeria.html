@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('head.html') %>
+    <link rel="stylesheet" href="css/galeria.css">
+    <title>Carpintería</title>
+</head>
+<body>
+    <section class="parte-superior">
+        <nav>
+            <a href="/"><box-icon name='home' color="#ffffff"></box-icon>Página principal</a>
+        </nav>
+    </section>
+    <section class="seccion" id="trabajo">
+        <h2 class="titulo">Galería</h2>
+        <%
+        let trabajosId=new Array();
+        res.forEach((trabajos)=>{
+            trabajosId.push(trabajos.id);
+        })
+        function idExistente(comprobando,sentido){
+            let idActual=0;
+            siguiente=0;
+            for(let i=0; i<trabajosId.length; i++){
+                if(trabajosId[i]==comprobando){
+                    idActual=i;
+                }
+            }
+            if(trabajosId[idActual+sentido]){
+                siguiente=trabajosId[idActual+sentido];
+            }
+            return siguiente;
+        } %>
+        <div class="galeria">
+            <%res.forEach((trabajos)=>{%> 
+                <a href=<%= "#trabajo"+trabajos.id %> class="imagen">
+                    <img src=<%= "img/trabajos/"+trabajos.archivo %> alt=<%= trabajos.archivo %>>
+                </a>
+            <%})%>
+        </div>
+    </section>
+        <%res.forEach((trabajos)=>{%>
+            <article class="lightbox" id=<%= "trabajo"+trabajos.id%>>
+                <%let id=idExistente(trabajos.id,-1); 
+                    if(id!=0){%>
+                        <a href=<%= "#trabajo"+id %> class="int"><box-icon name='chevron-left' size=lg></box-icon></a>
+                    <%}%>
+                <img src=<%= "img/trabajos/"+trabajos.archivo %> alt=<%= trabajos.archivo %>>
+                <div class="informacion">
+                    <h3 class="subtitulo">Información</h3>
+                    <div class="caracteristicas">
+                        <% 
+                            precio = ""+trabajos.precio;
+                            let precioFormato = "";
+                            var cont = 0;
+                            for(var j=precio.length-1; j >= 0; j--){
+                                cont++;
+                                precioFormato+=precio[j];
+                                if(cont%3==0 && j != 0){
+                                    precioFormato+=',';
+                                }
+                            }
+                            let formatoFinal="";
+                            for(var j=precioFormato.length-1; j >= 0; j--){
+                                formatoFinal+=precioFormato[j];
+                            }
+                        %>
+                        <p><box-icon name='money'></box-icon> Precio: $<%= formatoFinal %> Mxn</p>
+                        <p><box-icon name='wrench'></box-icon> Materiales: <%= trabajos.material %></p>
+                    </div>
+                    <p><%= trabajos.descripcion %></p>
+                </div>
+                <%id=idExistente(trabajos.id,+1); 
+                    if(id!=0){%>
+                        <a href=<%= "#trabajo"+id %> class="int"><box-icon name='chevron-right' size=lg></box-icon></a>
+                    <%}%>
+                <a href="#999" class="cerrar"><box-icon name='collapse-alt' color='#ffffff' size=lg></box-icon></a>
+                <div class="botones-res">
+                    <% id=idExistente(trabajos.id,-1); 
+                    if(id!=0){%>
+                        <a href=<%= "#trabajo"+id %> class="int btn-res"><box-icon name='chevron-left' size=lg></box-icon></a>
+                    <%}%>
+                    <%id=idExistente(trabajos.id,+1);
+                    if(id!=0){%>
+                        <a href=<%= "#trabajo"+id %> class="int btn-res"><box-icon name='chevron-right' size=lg></box-icon></a>
+                    <%}%>
+                </div>
+            </article>  
+        <%})%>
+    </section>
+</body>
+</html>

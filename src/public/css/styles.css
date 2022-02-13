@@ -222,7 +222,7 @@ nav a:hover{
     margin-right: 0;
     width: 60%;
 }
-.btn{
+.int{
     background: rgba(204, 218, 209, 0.7);
     width: 4rem;
     height: 4rem;
@@ -230,7 +230,7 @@ nav a:hover{
     justify-content: center;
     align-items: center;
 }
-.btn box-icon{
+.int box-icon{
     width: 80%;
     filter: invert(100);
 }
@@ -355,7 +355,9 @@ form{
     flex-direction: column;
     align-items: center;
 }
-.btn{
+.busc{
+    display: flex;
+    align-items: center;
     margin-top: 1rem;
     width: 60%;
     text-align: center;
@@ -370,7 +372,10 @@ form{
     transition-timing-function: linear;
     cursor: pointer;
 }
-.btn:hover{
+.busc box-icon{
+    width: 30%
+}
+.busc:hover{
     background-color: #645754;
 }
 input[type="number"]{
@@ -380,6 +385,17 @@ input[type="number"]{
     text-align: center;
     font-size: 1.2rem;
 }
+.botones-res{
+    display: none;
+    width: 90%;
+    justify-content: space-around;
+    align-items: center;
+}
+.btn-res{
+    display: flex;
+    width: 40%;
+}
+
 @media (max-width:768px){
     body{
         font-size: 1rem;
@@ -403,6 +419,29 @@ input[type="number"]{
     input[type="number"]{
         font-size: 1rem;
     }
+    .lightbox{
+        flex-direction: column;
+    }
+    .int{
+        display: none;
+    }
+    .botones-res{
+        display: flex;
+    }
+    .btn-res{
+        display: flex;
+    }
+    .informacion{
+        margin: 1rem;
+        width: 90%;
+        height: 10rem;
+    }
+    .lightbox img{
+        width: 80%;
+    }
+    .cerrar{
+        right: 1rem;
+    }
 }
 @media (max-width: 725px){
     .nombre{
@@ -410,6 +449,9 @@ input[type="number"]{
     }
 }
 @media (max-width: 580px){
+    .lightbox img{
+        width: 100%;
+    }
     .contenedor{
         width: 90%;
     }
@@ -432,7 +474,7 @@ input[type="number"]{
     }
     .referencia{
         width: 100%;
-        /*height: 10rem;*/
+        height: 10rem;
     }
     .textos{
         width: 100%;
