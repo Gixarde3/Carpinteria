@@ -20,6 +20,23 @@
     <title>Venta de <%= producto %></title>
 </head>
 <body>
+    <% function formato(precioF){
+        precio = ""+precioF;
+        let precioFormato = "";
+        var cont = 0;
+        for(var j=precio.length-1; j >= 0; j--){
+            cont++;
+            precioFormato+=precio[j];
+            if(cont%3==0 && j != 0){
+                precioFormato+=',';
+            }
+        }
+        let formatoFinal="";
+        for(var j=precioFormato.length-1; j >= 0; j--){
+            formatoFinal+=precioFormato[j];
+        }
+        return formatoFinal;
+    }%>
     <section class="parte-superior">
         <nav>
             <a href="/"><box-icon name='home' color="#ffffff"></box-icon>Página principal</a>
@@ -31,7 +48,7 @@
             <h1>Venta de <%= producto %></h1>
             <h2>Descripción del producto: </h2>
             <p id="descripcion"><%= descripcion %></p>
-            <p><box-icon name='money'></box-icon> Precio: $<%= costo %> Mxn</p>
+            <p><box-icon name='money'></box-icon> Precio: $<%= formato(costo) %> Mxn</p>
             <input type="hidden" value=<%=costo %> name="costo">
             <p><box-icon name='user-circle' type='solid' ></box-icon> Vendida a:  <%= nombre %></p>
             <div id="payment-element">

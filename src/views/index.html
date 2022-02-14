@@ -152,9 +152,20 @@
                     text: '<%= alertMessage %>',
                     icon: '<%= alertIcon %>',
                     showConfirmButton: <%=showConfirmButton%>,
-                    timer: <%=time%>
-                }).then(()=>{
-                    window.location = "<%= ruta %>";
+                    timer: <%=time%>,
+                    confirmButtonText: 'Ok',
+                    <% if (typeof showDenyButton != "undefined") { %>showDenyButton: true, denyButtonText: 'No' <%}%>
+                }).then((result)=>{
+                    <% if(typeof save != "undefined"){%>
+                        if (result.isConfirmed) {
+                            console.log('ok');
+                            window.location = '/generate-pdf'
+                        } else if (result.isDenied) {
+                            window.location = '/'
+                        }
+                    <%}else{%>
+                        window.location = "<%= ruta %>";
+                    <%}%>
                 })
             </script>
         <% } %>
