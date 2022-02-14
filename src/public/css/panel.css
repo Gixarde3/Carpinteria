@@ -177,11 +177,17 @@ textarea{
     width: 100%;
 }
 @media (max-width: 950px) {
+    #ventana{
+        width: 80%;
+    }
     article{
         width: 80%;
     }
 }
 @media (max-width: 650px) {
+    #ventada{
+        width: 90%;
+    }
     #responsive{
         display: block;
     }
@@ -202,6 +208,9 @@ textarea{
     }
 }
 @media (max-width: 420px) {
+    #ventana{
+        width: 95%;
+    }
     article{
         width: 95%;
     }

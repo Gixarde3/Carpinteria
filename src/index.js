@@ -9,7 +9,7 @@ const { redirect } = require('express/lib/response');
 const uuid = require('uuid');
 
 //Configurar
-app.set('port',8000);
+app.set('port',5555);
 app.set('views',path.join(__dirname+"/views"))
 app.engine('html',require('ejs').renderFile);
 app.set('view engine','ejs');
