@@ -3,10 +3,10 @@ const mysql=require('mysql');
 
 const conexion= mysql.createConnection({
     multipleStatements: true,
-    host: 'mysql-69042-0.cloudclusters.net',
-    port: '10755',
-    user: 'admin',
-    password: 'tk7IfMpE',
+    host: 'localhost',
+    port: '',
+    user: 'root',
+    password: '',
     database: 'carpinteria'
 });
 

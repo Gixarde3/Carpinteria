@@ -372,11 +372,12 @@ router.get('/venta', (req, res)=>{
     }
 })
 
-router.get('/succes', async (req,res)=>{
+router.get('/success', async (req,res)=>{
     let consultas = [
         "UPDATE ventas SET pagada = '1' WHERE ?",
         "SELECT * FROM trabajos ORDER BY id DESC"
     ]
+    console.log("Correcto")
     conexion.query(consultas.join(';'),{ id : req.session.idVenta},(error, results)=>{
         if(error){
             throw error;
